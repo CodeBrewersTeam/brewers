@@ -48,13 +48,23 @@ public class ApplicationUserController {
     }
     @GetMapping("/aboutUs")
     public String aboutUsPage() {
-        return "aboutUs.html"; //
+        return "aboutUs.html";
     }
 
     @GetMapping("/resoluteConflict")
     public String resoluteConflictPage() {
-        return "resoluteConflict.html"; //
+        return "resoluteConflict.html";
     }
+
+
+
+    @GetMapping("/errorPage")
+    public String showErrorPage(Model model) {
+        model.addAttribute("errorMessage", "An error occurred");
+        return "errorPage.html";
+    }
+
+
 
     @PostMapping("/signup")
     public RedirectView postSignup(String firstName, String lastName, String username, String password, String email, String householdId, Boolean admin, Long telephone, Long residenceId) {
