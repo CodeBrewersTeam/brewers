@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Home</title>
+    <meta name="description" content="A minimalist layout for Login pages. Built with Pico CSS."/>
+    <link rel="shortcut icon" href="https://picocss.com/favicon.ico"/>
+    <link rel="canonical" href="https://picocss.com/examples/sign-in/"/>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
+
+
+    <!--icon house-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+
+
+
+
+<main class="container">
+<div th:replace="fragments/header :: nav"></div>
+    <article class="grid">
+        <div>
+            <hgroup>
+                <h2> Home of RoomEase</h2>
+                <h2>Where Shared Living Becomes An Ease</h2>
+                <h3>Streamline your shared living experience with our comprehensive roommate management features.</h3>
+
+            </hgroup>
+
+            <h2>Don't have an account? <a href="/signup">Sign up</a></h2>
+
+            <form action="/login" method="POST">
+                <!-- Username -->
+
+                <label for="username" id="username">Username</label>
+                <input type="text" name="username">
+
+                <!-- Password -->
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+
+                <!-- Household ID -->
+                <!--                <label for="householdid">Household ID</label>-->
+                <!--                <input type="text" name="householdid" id="householdid">-->
+
+                <input type="submit" value="Log in">
+            </form>
+        </div>
+
+        <div>
+            <img src="https://images.unsplash.com/photo-1582298538104-fe2e74c27f59?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                 alt="Roommates" style="width: 700px; height: 650px; max-width: 100%;">
+        </div>
+    </article>
+</main>
+</body>
+</html>
+

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Residences</title>
+
+  <style>
+        .profile-pic {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-left: 20px;
+        }
+    </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
+</head>
+<body>
+<main class="container">
+  <div th:replace="fragments/header :: nav"></div>
+
+  <h1>List of Residences</h1>
+
+  <form th:action="@{/residences}" method="post">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+      <button type="submit">Create Residence</button>
+    </div>
+  </form>
+
+  <ul th:each="residence : ${residences}">
+    <li th:text="${residence.name}"></li>
+  </ul>
+
+</main>
+
+</body>
+</html>
