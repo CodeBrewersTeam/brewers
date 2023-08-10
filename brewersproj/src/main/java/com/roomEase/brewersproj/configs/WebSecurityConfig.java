@@ -41,6 +41,8 @@ public class WebSecurityConfig {
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/signup").permitAll()
                         .requestMatchers("/residences").permitAll()
+                        .requestMatchers("/residences/delete/**").permitAll()
+//                        .antMatchers("/residences/delete/**").hasRole("ADMIN")
                         .requestMatchers("/css/**").permitAll()
                         .anyRequest().authenticated()
                 )

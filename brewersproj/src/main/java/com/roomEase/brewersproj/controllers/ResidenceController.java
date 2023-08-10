@@ -1,5 +1,6 @@
 package com.roomEase.brewersproj.controllers;
 
+import com.roomEase.brewersproj.models.ApplicationUser;
 import com.roomEase.brewersproj.models.Residence;
 import com.roomEase.brewersproj.repositories.ResidenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class ResidenceController {
@@ -30,26 +34,40 @@ public class ResidenceController {
         return "redirect:/residences"; // Redirect back to the residence list
     }
 
-    @DeleteMapping("/residences/{id}")
-    public RedirectView deleteResidence(@PathVariable Long id) {
-        residenceRepository.deleteById(id);
-        return new RedirectView("/residences");
-    }
-
 //    @PostMapping("/residences/delete/{id}")
 //    public RedirectView deleteResidence(@PathVariable Long id) {
-//        residenceRepository.deleteById(id);
+//        logger.info("Attempting to delete residence with ID: {}", id);
+//
+//        if (residenceRepository.existsById(id)) {
+//            logger.info("Residence with ID: {} found. Deleting...", id);
+//            residenceRepository.deleteById(id);
+//            logger.info("Residence with ID: {} deleted successfully.", id);
+//        } else {
+//            logger.warn("No residence found with ID: {}", id);
+//        }
+//
 //        return new RedirectView("/residences");
 //    }
 
-//    @PostMapping("/residences")
-//    public String createResidence(@RequestParam String name, RedirectAttributes redirectAttributes) {
-//        Residence residence = new Residence();
-//        residence.setName(name);
-//        residenceRepository.save(residence);
-//
-//        redirectAttributes.addFlashAttribute("message", "Residence created successfully!");
-//        return "redirect:/residences";  // redirecting to GET request
-//    }
+    @PostMapping("/residences/delete/{id}")
+    public RedirectView deleteResidence(@PathVariable Long id) {
+        System.out.println("Deleting residence with ID: " + id);
+
+        if (residenceRepository.existsById(id)) {
+            Residence residence = residenceRepository.getById(id);
+            System.out.println("Residence found: " + residence.getName());
+
+            // Print related ApplicationUser records
+            List<ApplicationUser> users = residence.getUsers();
+            for (ApplicationUser user : users) {
+                System.out.println("User associated with residence: " + user.getUsername());
+            }
+
+            residenceRepository.deleteById(id);
+        }
+        return new RedirectView("/residences");
+    }
+
+    private static final Logger logger = LoggerFactory.getLogger(ResidenceController.class);
 
 }

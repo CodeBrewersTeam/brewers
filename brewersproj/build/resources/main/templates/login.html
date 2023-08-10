@@ -17,8 +17,10 @@
 <body>
 
 <main class="container">
-    <div th:replace="fragments/header :: nav"></div>
-<!--<nav class="container-fluid">-->
+<!--    <div th:replace="fragments/header :: nav"></div>-->
+    <div th:replace="~{fragments/header :: nav}"></div>
+
+    <!--<nav class="container-fluid">-->
 <!--    <ul>-->
 <!--        <li>-->
 <!--            <a href="/" class="roomease-text">-->
