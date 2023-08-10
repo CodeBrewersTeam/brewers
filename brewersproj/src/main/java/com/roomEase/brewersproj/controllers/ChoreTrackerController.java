@@ -32,34 +32,6 @@ public class ChoreTrackerController {
     private ApplicationUserRepository userRepository;
 
 
-//    @GetMapping("/choresTracker")
-//    public String getChoresTrackerPage(Model model, Principal principal) {
-//        String currentUserUsername = principal.getName();
-//        ApplicationUser currentUser = userRepository.findByUsername(currentUserUsername);
-//        if(currentUser == null) {
-//            // Handle this situation, maybe redirect to an error page or login
-//            return "errorPage.html";
-//        }
-//        List<ApplicationUser> usersInSameHousehold = userRepository.findByHouseholdId(currentUser.getHouseholdId());
-//        List<String> roommates = usersInSameHousehold.stream()
-//                .map(ApplicationUser::getUsername)
-//                .collect(Collectors.toList());
-//        List<Chore> chores = choreRepository.findAll();
-//        LocalDate currentDate = LocalDate.now();
-//        List<Chore> futureTasks = choreRepository.findAllByDueDateAfter(currentDate);
-//        Date currentDateAsDate = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-//        model.addAttribute("choreForm", new ChoreForm(roommates, chores));
-//        model.addAttribute("futureTasks", futureTasks);
-//        model.addAttribute("allUsers", usersInSameHousehold);
-//        String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-//        for (String day : days) {
-//            List<Chore> dayChores = choreRepository.findAllByDayOfWeek(day);
-//            model.addAttribute(day.toLowerCase() + "Chores", dayChores);
-//        }
-//        return "choresTracker.html";
-//    }
-
-
         @GetMapping("/choresTracker")
         public String getChoresTrackerPage(Model model, Principal principal) {
             LocalDate currentDate = LocalDate.now();

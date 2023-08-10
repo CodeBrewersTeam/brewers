@@ -34,17 +34,10 @@ public class ApplicationUserController {
     @Autowired
     ResidenceRepository residenceRepository;
 
-    // Mapping for login page
     @GetMapping("/login")
     public String getLoginPage() {
         return "login.html";
     }
-
-    // Mapping for signup page
-//    @GetMapping("/signup")
-//    public String getSignUpPage(){
-//        return "signup.html";
-//    }
 
     @GetMapping("/signup")
     public String getSignUpPage(Model model){
@@ -53,7 +46,6 @@ public class ApplicationUserController {
         model.addAttribute("residences", residences);
         return "signup";
     }
-
     @GetMapping("/aboutUs")
     public String aboutUsPage() {
         return "aboutUs.html"; //
@@ -64,7 +56,6 @@ public class ApplicationUserController {
         return "resoluteConflict.html"; //
     }
 
-    // Mapping for signup form submission
     @PostMapping("/signup")
     public RedirectView postSignup(String firstName, String lastName, String username, String password, String email, String householdId, Boolean admin, Long telephone, Long residenceId) {
         ApplicationUser user = new ApplicationUser();
@@ -82,16 +73,10 @@ public class ApplicationUserController {
 
         applicationUserRepository.save(user);
 
-        // Authenticate the user
         authWithHttpServletRequest(username, password);
-
-        // Redirect to login page
-        //  return new RedirectView("/");
         return new RedirectView("/login");
     }
 
-    // Method to authenticate user by username and password
-    // NOTE: we need to figure out how to authenticate by householdId ? current service only does password and username
     public void authWithHttpServletRequest(String username, String password) {
         try {
             System.out.println("Authenticating user: " + username);
@@ -114,45 +99,33 @@ public class ApplicationUserController {
         return "index.html";
     }
 
-    // myflatmates page
-
-    @GetMapping("/users")
-    public String getUsersByHouseholdId(Model m, Principal p) {
-        String currentUserUsername = p.getName();
-        ApplicationUser currentUser = applicationUserRepository.findByUsername(currentUserUsername);
-
-        if(currentUser != null) {
-            List<ApplicationUser> usersInSameHousehold = applicationUserRepository.findByHouseholdId(currentUser.getHouseholdId());
-            m.addAttribute("users", usersInSameHousehold);
-
-        }
-        return "myFlat.html";
-    }
-
+//    @GetMapping("/users")
 //    public String getUsersByHouseholdId(Model m, Principal p) {
 //        String currentUserUsername = p.getName();
 //        ApplicationUser currentUser = applicationUserRepository.findByUsername(currentUserUsername);
 //
 //        if(currentUser != null) {
-//            Long currentResidenceId = currentUser.getResidence().getId();
-//            List<ApplicationUser> usersInSameHouseholdAndResidence = applicationUserRepository.findByHouseholdIdAndResidenceId(currentUser.getHouseholdId(), currentResidenceId);
-//            m.addAttribute("users", usersInSameHouseholdAndResidence);
+//            List<ApplicationUser> usersInSameHousehold = applicationUserRepository.findByHouseholdId(currentUser.getHouseholdId());
+//            m.addAttribute("users", usersInSameHousehold);
 //        }
 //        return "myFlat.html";
 //    }
 
-    //handling user's profile
+    @GetMapping("/users")
+    public String getUsersByResidence(Model model, Principal principal) {
+        if (principal != null) {
+            String username = principal.getName();
+            ApplicationUser currentUser = applicationUserRepository.findByUsername(username);
 
-//    @GetMapping("/users/{id}")
-//    public String getUserInfo(Model model, Principal p, @PathVariable Long id){
-//        ApplicationUser foundUser = applicationUserRepository.findById(id)
-//                .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + id));
-//        model.addAttribute("foundUser", foundUser);
-//
-//        return "myFlat.html";
-//    }
+            if (currentUser != null) {
+                Residence userResidence = currentUser.getResidence();
+                List<ApplicationUser> usersInSameResidence = applicationUserRepository.findByResidence(userResidence);
+                model.addAttribute("users", usersInSameResidence);
+            }
+        }
+        return "myFlat.html";
+    }
 
-    // Mapping for user's profile page
     @GetMapping("/myprofile")
     public String getUserProfile(Model model, Principal principal) {
         if(principal != null){
@@ -164,7 +137,6 @@ public class ApplicationUserController {
         return "myprofile";
     }
 
-    //Updating User Profile
     @PostMapping("/myprofile/update")
     public RedirectView updateUserProfile(Principal principal, String firstName, String lastName, String email, Long telephone) {
         if (principal != null) {
@@ -181,28 +153,40 @@ public class ApplicationUserController {
         return new RedirectView("/myprofile");
     }
 
-    //acccounts' application page
+//    @GetMapping("/users/{id}")
+//    public String getUserInfo(Model m, Principal p, @PathVariable Long id) {
+//        if (p != null) {
+//            String username = p.getName();
+//            ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
+//
+//            m.addAttribute("BrowsingUserUsername", username);
+//            m.addAttribute("BrowsingLastName", applicationUser.getLastName());
+//            m.addAttribute("BrowsingFirstName", applicationUser.getFirstName());
+//            m.addAttribute("applicationUserEmail", applicationUser.getEmail());
+//            m.addAttribute("applicationUserTelephone", applicationUser.getTelephone());
+//        }
+//        ApplicationUser applicationUser = applicationUserRepository.findById(id).orElseThrow();
+//        m.addAttribute("applicationUserUsername", applicationUser.getUsername());
+//        m.addAttribute("applicationUserFirstName", applicationUser.getFirstName());
+//        m.addAttribute("applicationUserLastName", applicationUser.getLastName());
+//        m.addAttribute("applicationUserEmail", applicationUser.getEmail());
+//        m.addAttribute("applicationUserTelephone", applicationUser.getTelephone());
+//
+//        return "/user-info.html";
+//    }
 
     @GetMapping("/users/{id}")
-    public String getUserInfo(Model m, Principal p, @PathVariable Long id) {
-        if (p != null) {
-            String username = p.getName();
-            ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
-
-            m.addAttribute("BrowsingUserUsername", username);
-            m.addAttribute("BrowsingLastName", applicationUser.getLastName());
-            m.addAttribute("BrowsingFirstName", applicationUser.getFirstName());
-            m.addAttribute("applicationUserEmail", applicationUser.getEmail());
-            m.addAttribute("applicationUserTelephone", applicationUser.getTelephone());
-        }
+    public String getUserInfo(Model model, Principal principal, @PathVariable Long id) {
         ApplicationUser applicationUser = applicationUserRepository.findById(id).orElseThrow();
-        m.addAttribute("applicationUserUsername", applicationUser.getUsername());
-        m.addAttribute("applicationUserFirstName", applicationUser.getFirstName());
-        m.addAttribute("applicationUserLastName", applicationUser.getLastName());
-        m.addAttribute("applicationUserEmail", applicationUser.getEmail());
-        m.addAttribute("applicationUserTelephone", applicationUser.getTelephone());
 
+        if (principal != null) {
+            String username = principal.getName();
+            ApplicationUser currentUser = applicationUserRepository.findByUsername(username);
+            model.addAttribute("currentUser", currentUser);
+            model.addAttribute("username", username);
+        }
 
+        model.addAttribute("applicationUser", applicationUser);
         return "/user-info.html";
     }
 

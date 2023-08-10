@@ -29,25 +29,14 @@ public class ResidenceController {
     }
 
     @PostMapping("/residences")
-    public String createResidence(@ModelAttribute Residence residence) {
+    public String createResidence(@ModelAttribute Residence residence, Model model) {
+        if (!residence.getName().matches("\\d+")) {
+            model.addAttribute("error", "Residence should be a number");
+            return "residence-list";  // Return to the list with an error message
+        }
         residenceRepository.save(residence);
         return "redirect:/residences"; // Redirect back to the residence list
     }
-
-//    @PostMapping("/residences/delete/{id}")
-//    public RedirectView deleteResidence(@PathVariable Long id) {
-//        logger.info("Attempting to delete residence with ID: {}", id);
-//
-//        if (residenceRepository.existsById(id)) {
-//            logger.info("Residence with ID: {} found. Deleting...", id);
-//            residenceRepository.deleteById(id);
-//            logger.info("Residence with ID: {} deleted successfully.", id);
-//        } else {
-//            logger.warn("No residence found with ID: {}", id);
-//        }
-//
-//        return new RedirectView("/residences");
-//    }
 
     @PostMapping("/residences/delete/{id}")
     public RedirectView deleteResidence(@PathVariable Long id) {
