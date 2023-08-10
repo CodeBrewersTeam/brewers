@@ -47,4 +47,5 @@ public class Residence {
     public void setUsers(List<ApplicationUser> users) {
         this.users = users;
     }
+
 }

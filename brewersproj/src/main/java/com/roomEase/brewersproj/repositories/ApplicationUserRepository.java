@@ -17,4 +17,5 @@ public interface ApplicationUserRepository extends JpaRepository<ApplicationUser
     Set<ApplicationUser> findAllByIdIn(Set<Long> ids);
 
 
+//    List<ApplicationUser> findByHouseholdIdAndResidenceId(String householdId, Long currentResidenceId);
 }

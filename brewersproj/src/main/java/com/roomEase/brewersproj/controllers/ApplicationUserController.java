@@ -11,10 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -132,6 +129,18 @@ public class ApplicationUserController {
         return "myFlat.html";
     }
 
+//    public String getUsersByHouseholdId(Model m, Principal p) {
+//        String currentUserUsername = p.getName();
+//        ApplicationUser currentUser = applicationUserRepository.findByUsername(currentUserUsername);
+//
+//        if(currentUser != null) {
+//            Long currentResidenceId = currentUser.getResidence().getId();
+//            List<ApplicationUser> usersInSameHouseholdAndResidence = applicationUserRepository.findByHouseholdIdAndResidenceId(currentUser.getHouseholdId(), currentResidenceId);
+//            m.addAttribute("users", usersInSameHouseholdAndResidence);
+//        }
+//        return "myFlat.html";
+//    }
+
     //handling user's profile
 
 //    @GetMapping("/users/{id}")
@@ -209,6 +218,12 @@ public class ApplicationUserController {
             applicationUserRepository.save(applicationUser);
         }
         return new RedirectView("/users/" + id);
+    }
+
+    @DeleteMapping("/users/{id}")
+    public RedirectView deleteUser(@PathVariable Long id) {
+        applicationUserRepository.deleteById(id);
+        return new RedirectView("/users");
     }
 
 }
