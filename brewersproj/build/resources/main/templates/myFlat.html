@@ -48,11 +48,11 @@
         <p th:text="${'Email: ' + user.email}"></p>
         <p th:text="${'Phone: ' + user.telephone}"></p>
 <!--        <a href="#" role="button" style="background-color: #b22222; color: white;">Delete</a>-->
-        <form th:action="@{/users/{id}(id=${user.id})}" method="post" th:method="delete" style="display: inline;">
-            <button type="submit" style="background-color: #b22222; color: white;">Delete</button>
-        </form>
-        <form id="delete-user-form-${user.id}" th:action="@{/users/{id}(id=${user.id})}" th:method="post" style="display: none;"></form>
-
+        <div th:if="${currentUser.admin}">
+            <form id="delete-user-form-${user.id}" th:action="@{/users/{id}(id=${user.id})}" th:method="delete" style="display: inline;">
+                <button type="submit" style="background-color: #b22222; color: white;">Delete</button>
+            </form>
+        </div>
 
 
     </article>

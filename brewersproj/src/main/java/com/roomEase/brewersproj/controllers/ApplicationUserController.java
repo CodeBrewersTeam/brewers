@@ -100,13 +100,16 @@ public class ApplicationUserController {
     }
 
 //    @GetMapping("/users")
-//    public String getUsersByHouseholdId(Model m, Principal p) {
-//        String currentUserUsername = p.getName();
-//        ApplicationUser currentUser = applicationUserRepository.findByUsername(currentUserUsername);
+//    public String getUsersByResidence(Model model, Principal principal) {
+//        if (principal != null) {
+//            String username = principal.getName();
+//            ApplicationUser currentUser = applicationUserRepository.findByUsername(username);
 //
-//        if(currentUser != null) {
-//            List<ApplicationUser> usersInSameHousehold = applicationUserRepository.findByHouseholdId(currentUser.getHouseholdId());
-//            m.addAttribute("users", usersInSameHousehold);
+//            if (currentUser != null) {
+//                Residence userResidence = currentUser.getResidence();
+//                List<ApplicationUser> usersInSameResidence = applicationUserRepository.findByResidence(userResidence);
+//                model.addAttribute("users", usersInSameResidence);
+//            }
 //        }
 //        return "myFlat.html";
 //    }
@@ -116,12 +119,11 @@ public class ApplicationUserController {
         if (principal != null) {
             String username = principal.getName();
             ApplicationUser currentUser = applicationUserRepository.findByUsername(username);
+            model.addAttribute("currentUser", currentUser);
 
-            if (currentUser != null) {
-                Residence userResidence = currentUser.getResidence();
-                List<ApplicationUser> usersInSameResidence = applicationUserRepository.findByResidence(userResidence);
-                model.addAttribute("users", usersInSameResidence);
-            }
+            Residence userResidence = currentUser.getResidence();
+            List<ApplicationUser> usersInSameResidence = applicationUserRepository.findByResidence(userResidence);
+            model.addAttribute("users", usersInSameResidence);
         }
         return "myFlat.html";
     }
