@@ -38,7 +38,7 @@ public class ResidenceController {
         return "redirect:/residences"; // Redirect back to the residence list
     }
 
-    @PostMapping("/residences/delete/{id}")
+    @DeleteMapping("/residences/delete/{id}")
     public RedirectView deleteResidence(@PathVariable Long id) {
         System.out.println("Deleting residence with ID: " + id);
 
