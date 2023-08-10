@@ -32,31 +32,18 @@
     </div>
   </form>
 
-<!--  <ul th:each="residence : ${residences}">-->
-<!--    <li th:text="${residence.name}"></li>-->
-<!--  </ul>-->
-
   <ul>
     <li th:each="residence : ${residences}">
       <span th:text="${residence.name}"></span>
 
-      <form th:action="@{/residences/{id}(id=${residence.residenceId})}" method="post" style="display: inline;">
-        <button type="submit" style="background-color: #b22222; color: white;">Delete</button>
-      </form>
-      <form id="delete-user-form-${residence.residenceId}" th:action="@{/residences/{id}(id=${residence.residenceId})}" th:method="post" style="display: none;"></form>
+      <a th:href="@{/residences/delete/{residenceId}(residenceId=${residence.residenceId})}"
+         onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this residence?')) document.getElementById('delete-residence-form-${residence.residenceId}').submit();"
+         role="button" style="background-color: #b22222; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none;">Delete</a>
 
-<!--      <form th:action="@{/residences/{id}(id=${residence.id})}" th:method="post" id="delete-residence-form-${residence.id}">-->
-<!--        <input type="hidden" name="_method" value="delete"/>-->
-<!--        <a href="#"-->
-<!--           onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this residence?')) document.getElementById('delete-residence-form-${residence.id}').submit();"-->
-<!--           role="button" style="background-color: #b22222; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none;">Delete</a>-->
-<!--      </form>-->
-
+      <form id="delete-residence-form-${residence.residenceId}" th:action="@{/residences/delete/{residenceId}(residenceId=${residence.residenceId})}" method="post" style="display: none;"></form>
 
     </li>
   </ul>
-
-
 
 </main>
 
