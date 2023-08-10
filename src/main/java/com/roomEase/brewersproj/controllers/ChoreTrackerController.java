@@ -48,12 +48,12 @@ public class ChoreTrackerController {
             String currentUserUsername = principal.getName();
             ApplicationUser currentUser = userRepository.findByUsername(currentUserUsername);
             if(currentUser == null) {
-                // Handle this situation, maybe redirect to an error page or login
                 return "errorPage.html";
             }
 
-            List<ApplicationUser> usersInSameHousehold = userRepository.findByHouseholdId(currentUser.getHouseholdId());
-            List<String> roommates = usersInSameHousehold.stream()
+            List<ApplicationUser> usersInSameResidence = userRepository.findByResidence(currentUser.getResidence());
+
+            List<String> roommates = usersInSameResidence.stream()
                     .map(ApplicationUser::getUsername)
                     .collect(Collectors.toList());
             List<Chore> chores = choreRepository.findAll();
@@ -61,7 +61,7 @@ public class ChoreTrackerController {
             Date currentDateAsDate = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
             model.addAttribute("choreForm", new ChoreForm(roommates, chores));
             model.addAttribute("futureTasks", futureTasks);
-            model.addAttribute("allUsers", usersInSameHousehold);
+            model.addAttribute("allUsers", usersInSameResidence);
             String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
             for (String day : days) {
                 List<Chore> dayChores = choreRepository.findAllByDayOfWeek(day);
