@@ -39,12 +39,12 @@ public class ConflictResolution {
         System.out.println("Conflict Description: " + conflictDescription);
 
         try {
-            String prompt = "Provide concise steps to resolve the situation when " + conflictDescription;
+            String prompt = "Suggest a solution to the issue of " + conflictDescription;
 
             String requestBody = objectMapper.writeValueAsString(Map.of(
                     "prompt", prompt,
-                    "max_tokens", 100,
-                    "temperature", 0.5
+                    "max_tokens", 150,
+                    "temperature", 0.7
             ));
 
             HttpRequest request = HttpRequest.newBuilder()
