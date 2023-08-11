@@ -41,9 +41,9 @@
             <input type="email" name="email"/>
 
 
-            <label>Residence:</label>
+            <label>HouseHold:</label>
             <select name="residenceId">
-                <option value="">Select a Residence</option>
+                <option value="">Select a Household</option>
 
                 <th:block th:each="residence : ${residences}">
                     <option th:value="${residence.name}" th:text="${residence.name}"></option>

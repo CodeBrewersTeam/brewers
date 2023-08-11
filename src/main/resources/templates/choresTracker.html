@@ -138,11 +138,11 @@
 <main class="container">
 
     <div th:replace="fragments/header :: nav"></div>
-    <div th:include="fragments/displayinfo :: displayinfo"></div>
 
 
     <h2>Chores Tracker for the week of <span th:text="${startOfWeek}" style="color: #4B9CD3;"></span> to <span
             th:text="${endOfWeek}" style="color: #4B9CD3;"></span></h2>
+    <div th:include="fragments/displayinfo :: displayinfo"></div>
     <h5>Current Time: <span th:text="${currentTime}" style="color: #4B9CD3;"></span></h5>
 
     <div class="calendar">
