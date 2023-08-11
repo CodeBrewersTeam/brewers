@@ -2,6 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="path-to-form-pico-css.css">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chore Tracker</title>
 
@@ -10,7 +12,7 @@
 
         .container label {
             font-size: 0.8em;
-            font-weight: 400;
+            font-weight: 200;
             color: #555;
             display: block;
             margin-bottom: 5px;
@@ -74,6 +76,41 @@
             border: 1px solid #ccc;
         }
 
+            .calendar {
+    display: flex;
+<!--    justify-content: center;-->
+<!--    align-items: center;-->
+    height: 100vh;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+    padding: 50px;
+}
+
+.day, .task {
+    border: 1px solid #ccc;
+    padding: 60px; /* Increase containers */
+    box-sizing: border-box;
+}
+
+.future-task {
+    grid-column: span 2;
+}
+
+   .form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.field-group {
+    margin-bottom: 15px;
+}
+
 
 
     </style>
@@ -116,6 +153,7 @@
     <h5>Current Time: <span th:text="${currentTime}" style="color: #4B9CD3;"></span></h5>
 
     <div class="calendar">
+        <div class="grid-container">
 
 
         <div class="days-of-week">
@@ -123,7 +161,7 @@
         <div class="day day-Sunday">
             <h3>Sunday</h3>
             <button class="open-modal-button contrast" data-target="SundayModal" onClick="toggleModal(event)">
-                Add Chore for Sunday
+                Add
             </button>
 
             <div th:each="sundayChore : ${sundayChores}" class="chore">
@@ -162,14 +200,13 @@
 
 
 
-<!--something is making sunday merge with others, this div somewhat fixed this, still isues-->
     </div>
 
     <!-- Monday -->
     <div class="day day-Monday">
         <h3>Monday</h3>
         <button class="open-modal-button contrast" data-target="MondayModal" onClick="toggleModal(event)">
-            Add Chore for Monday
+            Add
         </button>
 
         <div th:each="mondayChore : ${mondayChores}" class="chore">
@@ -210,7 +247,7 @@
         <div class="day day-Tuesday">
             <h3>Tuesday</h3>
             <button class="open-modal-button contrast" data-target="TuesdayModal" onClick="toggleModal(event)">
-                Add Chore for Tuesday
+                Add
             </button>
 
             <div th:each="tuesdayChore : ${tuesdayChores}" class="chore">
@@ -251,7 +288,7 @@
         <div class="day day-Wednesday">
             <h3>Wednesday</h3>
             <button class="open-modal-button contrast" data-target="WednesdayModal" onClick="toggleModal(event)">
-                Add Chore for Wednesday
+                Add
             </button>
 
             <div th:each="wednesdayChore : ${wednesdayChores}" class="chore">
@@ -292,7 +329,7 @@
         <div class="day day-Thursday">
             <h3>Thursday</h3>
             <button class="open-modal-button contrast" data-target="ThursdayModal" onClick="toggleModal(event)">
-                Add Chore for Thursday
+                Add
             </button>
 
             <div th:each="thursdayChore : ${thursdayChores}" class="chore">
@@ -333,7 +370,7 @@
         <div class="day day-Friday">
             <h3>Friday</h3>
             <button class="open-modal-button contrast" data-target="FridayModal" onClick="toggleModal(event)">
-                Add Chore for Friday
+                Add
             </button>
 
             <div th:each="fridayChore : ${fridayChores}" class="chore">
@@ -354,6 +391,7 @@
             <article>
                 <a href="#close" aria-label="Close" class="close" data-target="FridayModal" onClick="toggleModal(event)"></a>
                 <h3>Add Chore for Friday</h3>
+
                 <form action="/addFridayChore" method="post">
                     <label for="fridayUser">Roommate:</label>
                     <select id="fridayUser" name="userId" required>
@@ -373,7 +411,7 @@
         <div class="day day-Saturday">
             <h3>Saturday</h3>
             <button class="open-modal-button contrast" data-target="SaturdayModal" onClick="toggleModal(event)">
-                Add Chore for Saturday
+                Add
             </button>
 
             <div th:each="saturdayChore : ${saturdayChores}" class="chore">
@@ -409,13 +447,15 @@
             </article>
         </dialog>
 
-    </div>
+        </div>
 
     </div>
 
-    <h2>Things that need to get done the following week:</h2>
+    <div class="form-container">
+
+    <h2>Tasks for the following week:</h2>
     <form action="/addChore" method="post">
-        <label for="name">Name:</label>
+        <label for="name">Assign to:</label>
         <input type="text" id="name" name="name" required/>
         <label for="dueDate">Due Date:</label>
         <input type="date" id="dueDate" name="dueDate" required/>
@@ -450,11 +490,12 @@
             </form>
         </div>
     </div>
+
     </div>
 
 </main>
 
-<script>
+    <script>
     function openModal(day) {
         const modal = document.getElementById(`${day}Modal`);
         modal.style.display = "block";
