@@ -52,6 +52,7 @@ public class WebSecurityConfig {
 
 
                 )
+
                 .formLogin()
                 .loginPage("/login").permitAll()
                 .defaultSuccessUrl("/myprofile") // Redirect to myprofile upon successful login
