@@ -36,9 +36,10 @@
 <main class="container">
     <div class="myflat-section">
         <div th:replace="fragments/header :: nav"></div>
+        <div th:include="fragments/displayinfo :: displayinfo"></div>
+
         <h1>My Flatmates</h1>
     </div>
-
 
     <article class="profile" th:each="user : ${users}">
         <a th:href="@{/users/{id}(id=${user.id})}">
@@ -47,14 +48,11 @@
         <p th:text="${'Username: ' + user.username}"></p>
         <p th:text="${'Email: ' + user.email}"></p>
         <p th:text="${'Phone: ' + user.telephone}"></p>
-<!--        <a href="#" role="button" style="background-color: #b22222; color: white;">Delete</a>-->
         <div th:if="${currentUser.admin}">
             <form id="delete-user-form-${user.id}" th:action="@{/users/{id}(id=${user.id})}" th:method="delete" style="display: inline;">
                 <button type="submit" style="background-color: #b22222; color: white;">Delete</button>
             </form>
         </div>
-
-
     </article>
 </main>
 </body>

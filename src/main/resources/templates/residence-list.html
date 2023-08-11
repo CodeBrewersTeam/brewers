@@ -23,6 +23,8 @@
 <body>
 <main class="container">
   <div th:replace="fragments/header :: nav"></div>
+  <div th:include="fragments/displayinfo :: displayinfo"></div>
+
 
   <h1>List of Residences</h1>
 
@@ -40,12 +42,7 @@
     <li th:each="residence : ${residences}">
       <span th:text="${residence.name}"></span>
 
-<!--      <a th:href="@{/residences/delete/{residenceId}(residenceId=${residence.residenceId})}"-->
-<!--         onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this residence?')) document.getElementById('delete-residence-form-${residence.residenceId}').submit();"-->
-<!--         role="button" style="background-color: #b22222; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none;">Delete</a>-->
-
       <form id="delete-residence-form-${residence.residenceId}" th:action="${'/residences/delete/' + residence.residenceId}" th:method="delete">
-<!--      <input type ="submit" value ="delete" class="button-style">-->
         <button type="submit" class="button-style">Delete</button>
 
       </form>

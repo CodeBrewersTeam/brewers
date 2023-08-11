@@ -32,10 +32,10 @@ public class ResidenceController {
     public String createResidence(@ModelAttribute Residence residence, Model model) {
         if (!residence.getName().matches("\\d+")) {
             model.addAttribute("error", "Residence should be a number");
-            return "residence-list";  // Return to the list with an error message
+            return "residence-list";
         }
         residenceRepository.save(residence);
-        return "redirect:/residences"; // Redirect back to the residence list
+        return "redirect:/residences";
     }
 
     @DeleteMapping("/residences/delete/{id}")

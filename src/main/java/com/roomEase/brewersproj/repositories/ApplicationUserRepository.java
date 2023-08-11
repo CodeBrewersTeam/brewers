@@ -10,13 +10,9 @@ public interface ApplicationUserRepository extends JpaRepository<ApplicationUser
 
     ApplicationUser findByUsername(String username);
 
-//alex: need for filtering out users by ID
     List<ApplicationUser> findByHouseholdId(String householdId);
     List<ApplicationUser> findByResidence(Residence residence);
 
-    
-
-    //this is for chores for each day of the week
     Set<ApplicationUser> findAllByIdIn(Set<Long> ids);
 
 
@@ -24,7 +20,4 @@ public interface ApplicationUserRepository extends JpaRepository<ApplicationUser
 
     List<ApplicationUser> findNonAdminUsersByResidence(Residence userResidence);
 
-//    List<ApplicationUser> findByIsApprovedFalseAndResidence(Residence residence);
-//
-//    List<ApplicationUser> findByIsAdminFalseAndResidence(Residence residence);
 }

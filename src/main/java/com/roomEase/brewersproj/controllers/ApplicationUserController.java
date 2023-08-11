@@ -86,7 +86,7 @@ public class ApplicationUserController {
 
         user.setResidence(selectedResidence);
         applicationUserRepository.save(user);
-        authWithHttpServletRequest(username, password);
+//        authWithHttpServletRequest(username, password);
         return new RedirectView("/login");
     }
 
@@ -106,11 +106,9 @@ public class ApplicationUserController {
 
                 return "adminDashboard.html";
             } else {
-                // Not an admin, redirect to an error page or homepage
                 return "redirect:/";
             }
         } else {
-            // Not logged in, redirect to login page
             return "redirect:/login";
         }
     }
@@ -234,7 +232,5 @@ public class ApplicationUserController {
         applicationUserRepository.deleteById(id);
         return new RedirectView("/users");
     }
-
-
 
 }
