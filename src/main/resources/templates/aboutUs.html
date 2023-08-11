@@ -9,44 +9,47 @@
         .row {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .column {
-            flex: 0 0 calc(25% - 16px);
-            max-width: calc(25% - 16px);
-            margin: 10px;
+            flex: 0 0 calc(25% - 20px);  /* Adjusting the width calculations a bit */
+            max-width: calc(25% - 20px);
+            margin: 5px;
+            display: flex;  /* Ensure each card takes up full height of the column */
+            justify-content: center;
+        }
+
+        .card {
+            width: 100%;    /* Take up full width of the column */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ccc;  /* Optional; just to see card borders */
+            padding: 20px;  /* Space inside the card */
+        }
+
+    .card img {
+    width: 70%;   /* Set to desired square size */
+    height: 100%;  /* Set to desired square size */
+    object-fit: cover; /* This will crop the image to fit the container */
+    margin-bottom: 15px;  /* Space between the image and the header */
+}
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .button {
+            text-align: center;
         }
 
 
-<!--        .nav-buttons {-->
-<!--            display: flex;-->
-<!--            justify-content: center;-->
-<!--            padding: 10px;-->
-<!--        }-->
 
-<!--        .nav-button {-->
-<!--            padding: 5px 10px;-->
-<!--            text-decoration: none;-->
-<!--            color: white;-->
-<!--            transition: color 0.3s;-->
-<!--        }-->
 
-<!--        .nav-button:hover {-->
-<!--            color: #007bff;-->
-<!--        }-->
-
-<!--        .nav-button:not(:last-child)::after {-->
-<!--            content: '/';-->
-<!--            margin: 0 5px;-->
-<!--            color: #999;-->
-<!--        }-->
-
-<!--        @media screen and (max-width: 650px) {-->
-<!--            .column {-->
-<!--                flex: 0 0 50%;-->
-<!--                max-width: 50%;-->
-<!--            }-->
-<!--        }-->
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
@@ -80,7 +83,7 @@
 
     <div class="column">
         <article class="card">
-            <img src="https://avatars.githubusercontent.com/u/130792097?v=4" alt="jennifer" style="width:100%">
+            <img src="https://avatars.githubusercontent.com/u/130792097?v=4" alt="Alex" style="width:100%">
             <div class="container">
                 <header>
                     <h2>Alex Chao</h2>
@@ -95,7 +98,7 @@
 
     <div class="column">
         <article class="card">
-            <img src="https://avatars.githubusercontent.com/u/103798599?v=4" alt="jennifer" style="width:100%">
+            <img src="https://avatars.githubusercontent.com/u/103798599?v=4" alt="Wasim" style="width:100%">
             <div class="container">
                 <header>
                     <h2>Wasim Soomro</h2>
@@ -111,7 +114,7 @@
 
     <div class="column">
         <article class="card">
-            <img src="https://avatars.githubusercontent.com/u/130828574?v=4" alt="jennifer" style="width:100%">
+            <img src="https://avatars.githubusercontent.com/u/130828574?v=4" alt="jon" style="width:100%">
             <div class="container">
                 <header>
                     <h2>Jonathon Stillson</h2>
