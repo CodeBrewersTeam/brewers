@@ -10,11 +10,7 @@ public interface ApplicationUserRepository extends JpaRepository<ApplicationUser
 
     ApplicationUser findByUsername(String username);
 
-    List<ApplicationUser> findByHouseholdId(String householdId);
     List<ApplicationUser> findByResidence(Residence residence);
-
-    Set<ApplicationUser> findAllByIdIn(Set<Long> ids);
-
 
     List<ApplicationUser> findNonApprovedUsersByResidence(Residence userResidence);
 

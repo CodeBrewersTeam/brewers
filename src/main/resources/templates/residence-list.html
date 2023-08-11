@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Residences</title>
+  <title>Households</title>
 
   <style>
         .profile-pic {
@@ -24,7 +24,7 @@
 <main class="container">
   <div th:replace="fragments/header :: nav"></div>
 
-  <h1>List of Residences</h1>
+  <h1>List of Households</h1>
 
   <form th:action="@{/residences}" method="post">
     <div>
@@ -32,7 +32,7 @@
       <input type="text" id="name" name="name" required>
     </div>
     <div>
-      <button type="submit" class="button-style">Create Residence</button>
+      <button type="submit" class="button-style">Create a Household</button>
     </div>
   </form>
 

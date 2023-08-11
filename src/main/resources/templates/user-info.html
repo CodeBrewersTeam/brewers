@@ -17,9 +17,9 @@
 <body>
 <main class="container">
     <div th:replace="fragments/header :: nav"></div>
-    <div th:include="fragments/displayinfo :: displayinfo"></div>
 
     <h1>Welcome, <span th:text="${applicationUserUsername}" style="color: #4B9CD3;"></span> profile!</h1>
+    <div th:include="fragments/displayinfo :: displayinfo"></div>
     <div>
         <article class="profile-details">
             <header>

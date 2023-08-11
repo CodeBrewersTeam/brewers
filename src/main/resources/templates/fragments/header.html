@@ -14,7 +14,7 @@
         <li><strong>RoomEase</strong></li>
     </ul>
     <ul>
-        <li sec:authorize="isAuthenticated()"><a href="/residences">My Residence</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/residences">My Household</a></li>
         <li sec:authorize="hasAuthority('ADMIN')"><a href="/adminDashboard">Admin Dashboard</a></li>
         <li sec:authorize="isAuthenticated()"><a href="/myprofile">My Profile</a></li>
         <li sec:authorize="hasAuthority('APPROVED_USER')"><a href="/users">View My Flatmates</a></li>

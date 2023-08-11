@@ -63,14 +63,13 @@ public class ApplicationUserController {
     }
 
     @PostMapping("/signup")
-    public RedirectView postSignup(String firstName, String lastName, String username, String password, String email, String householdId, Boolean admin, Long telephone, Long residenceId) {
+    public RedirectView postSignup(String firstName, String lastName, String username, String password, String email, Boolean admin, Long telephone, Long residenceId) {
         ApplicationUser user = new ApplicationUser();
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         user.setEmail(email);
-        user.setHouseholdId(householdId);
         user.setTelephone(telephone);
 
         Residence selectedResidence = residenceRepository.findById(residenceId).orElse(null);
