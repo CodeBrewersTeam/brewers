@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,25 +7,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
+<!--<nav>-->
+<!--    <ul>-->
+<!--            <i class="fas fa-house-user roomease-icon"></i>-->
+<!--            <li><strong>RoomEase</strong></li>-->
+<!--    </ul>-->
+<!--    <ul>-->
+<!--        <li><a href="/residences">My Residence</a></li>-->
+<!--        <li><a href="/adminDashboard">Admin Dashboard</a></li>-->
+<!--        <li><a href="/myprofile">My Profile</a></li>-->
+<!--        <li><a href="/users">View My Flatmates</a></li>-->
+<!--        <li><a href="/choresTracker">Chore Tracker</a></li>-->
+<!--        <li><a href="/resolveConflict">Resolve a Conflict</a></li>-->
+<!--&lt;!&ndash;        <li><a href="/signup">Sign Up</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;        <li><a href="/login">Login</a></li>&ndash;&gt;-->
+<!--        <li><a href="/aboutUs">About Us</a></li>-->
+<!--        <li><a href="/logout" role="button">Logout</a></li>-->
+<!--    </ul>-->
+
+<!--</nav>-->
 <nav>
     <ul>
-            <i class="fas fa-house-user roomease-icon"></i>
-            <li><strong>RoomEase</strong></li>
+        <i class="fas fa-house-user roomease-icon"></i>
+        <li><strong>RoomEase</strong></li>
     </ul>
     <ul>
-        <li><a href="/residences">My Residence</a></li>
-        <li><a href="/adminDashboard">Admin Dashboard</a></li>
-        <li><a href="/myprofile">My Profile</a></li>
-        <li><a href="/users">View My Flatmates</a></li>
-        <li><a href="/choresTracker">Chore Tracker</a></li>
-        <li><a href="/resolveConflict">Resolve a Conflict</a></li>
-<!--        <li><a href="/signup">Sign Up</a></li>-->
-<!--        <li><a href="/login">Login</a></li>-->
+        <li sec:authorize="isAuthenticated()"><a href="/residences">My Residence</a></li>
+        <li sec:authorize="hasAuthority('ADMIN')"><a href="/adminDashboard">Admin Dashboard</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/myprofile">My Profile</a></li>
+        <li sec:authorize="hasAuthority('APPROVED_USER')"><a href="/users">View My Flatmates</a></li>
+        <li sec:authorize="hasAuthority('APPROVED_USER')"><a href="/choresTracker">Chore Tracker</a></li>
+        <li sec:authorize="hasAuthority('APPROVED_USER')"><a href="/resolveConflict">Resolve a Conflict</a></li>
         <li><a href="/aboutUs">About Us</a></li>
-        <li><a href="/logout" role="button">Logout</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/logout" role="button">Logout</a></li>
     </ul>
-
 </nav>
-
 </body>
 </html>
