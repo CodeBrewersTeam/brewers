@@ -33,39 +33,15 @@ public class Chore {
     }
 
 
-    //maybe this is issue?
     @Column(name="day_of_week")
     private String dayOfWeek;
 
-
-    //The Chore class to include the many-to-many relationship with ApplicationUser.
     @ManyToMany(mappedBy = "chores")
     private List<ApplicationUser> users;
-
-//    @ManyToMany
-//    private Set<ApplicationUser> assignedUsers = new HashSet<>();
-
 
     @ManyToMany
     private Set<ApplicationUser> assignedUsers = new HashSet<>();
 
-//    public void setAssignedUsers(Set<ApplicationUser> assignedUsers) {
-//        this.assignedUsers = assignedUsers;
-//    }
-
-    // for the future task code in choreTracker, add name beside Assign roommate:
-//    @ManyToOne
-//    @JoinColumn(name = "assigned_user_id")
-//    private ApplicationUser assignedUser;
-//
-//
-//    public ApplicationUser getAssignedUser() {
-//        return assignedUser;
-//    }
-//
-//    public void setAssignedUser(ApplicationUser assignedUser) {
-//        this.assignedUser = assignedUser;
-//    }
     public List<ApplicationUser> getUsers() {
         return users;
     }
@@ -81,7 +57,6 @@ public class Chore {
     public void setAssignedUsers(Set<ApplicationUser> assignedUsers) {
         this.assignedUsers = assignedUsers;
     }
-
 
     public String getDayOfWeek() {
         return dayOfWeek;

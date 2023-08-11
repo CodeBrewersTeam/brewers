@@ -17,7 +17,9 @@
 <body>
 <main class="container">
     <div th:replace="fragments/header :: nav"></div>
-    <h1>Welcome, this is <span th:text="${applicationUserUsername}" style="color: #4B9CD3;"></span> profile!</h1>
+    <div th:include="fragments/displayinfo :: displayinfo"></div>
+
+    <h1>Welcome, <span th:text="${applicationUserUsername}" style="color: #4B9CD3;"></span> profile!</h1>
     <div>
         <article class="profile-details">
             <header>
@@ -25,18 +27,12 @@
                         src="https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80"
                         alt="Profile Picture" class="profile-pic">
             </header>
-<!--            <p><span class="label">Username:</span> <span th:text="${applicationUserUsername}"></span></p>-->
-<!--            <p><span class="label">First Name:</span> <span th:text="${applicationUserFirstName}"></span></p>-->
-<!--            <p><span class="label">Last Name:</span> <span th:text="${applicationUserLastName}"></span></p>-->
-<!--            <p><span class="label">Email:</span> <span th:text="${applicationUserEmail}"></span></p>-->
-<!--            <p><span class="label">Phone Number:</span> <span th:text="${applicationUserTelephone}"></span></p>-->
 
             <p><span class="label">Username:</span> <span th:text="${applicationUser.username}"></span></p>
             <p><span class="label">First Name:</span> <span th:text="${applicationUser.firstName}"></span></p>
             <p><span class="label">Last Name:</span> <span th:text="${applicationUser.lastName}"></span></p>
             <p><span class="label">Email:</span> <span th:text="${applicationUser.email}"></span></p>
             <p><span class="label">Phone Number:</span> <span th:text="${applicationUser.telephone}"></span></p>
-
 
         </article>
 
@@ -46,6 +42,3 @@
 
 </body>
 </html>
-
-
-

@@ -4,60 +4,87 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
+
+    <style>
+        .approved {
+            background-color: green;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .approved i {
+            margin-right: 5px;
+        }
+    </style>
+
 </head>
 <body>
 <main class="container">
 
-<div th:replace="fragments/header :: nav"></div>
-<h1>Admin Dashboard</h1>
+    <div th:replace="fragments/header :: nav"></div>
+    <h1>Admin Dashboard</h1>
 
-<section>
-    <h2>Users Awaiting Approval</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Approve</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="user : ${nonApprovedUsers}">
-            <td th:text="${user.firstName} + ' ' + ${user.lastName}"></td>
-            <td th:text="${user.email}"></td>
-            <td>
-                <form th:action="@{/users/approve/{id}(id=${user.id})}" method="post">
-                    <button type="submit">Approve</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</section>
+    <section>
+        <h2>Users Awaiting Approval</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Approve</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${nonApprovedUsers}">
+                <td th:text="${user.firstName} + ' ' + ${user.lastName}"></td>
+                <td th:text="${user.email}"></td>
+                <td>
+                    <div th:if="${user.isApproved}">
+                    <span class="approved">
+                        <i class="fas fa-check"></i> Approved
+                    </span>
+                    </div>
+                    <form th:if="${!user.isApproved}" th:action="@{/users/approve/{id}(id=${user.id})}" method="post">
+                        <button type="submit">Approve</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
 
-<section>
-    <h2>Non-Admin Users</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Make Admin</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="user : ${nonAdminUsers}">
-            <td th:text="${user.firstName} + ' ' + ${user.lastName}"></td>
-            <td th:text="${user.email}"></td>
-            <td>
-                <form th:action="@{/users/promote/{id}(id=${user.id})}" method="post">
-                    <button type="submit">Make Admin</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</section>
+
+        <section>
+            <h2>Non-Admin Users</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Make Admin</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${nonApprovedUsers}">
+                    <td th:text="${user.firstName} + ' ' + ${user.lastName}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td>
+                        <div th:if="${user.getAdmin}">
+                            <i class="fas fa-check-circle" style="color: green;"></i>
+                        </div>
+                        <div th:unless="${user.getAdmin}">
+                            <form th:action="@{/users/promote/{id}(id=${user.id})}" method="post">
+                                <button type="submit" class="approve-button">Promote!</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
 </main>
 
 </body>

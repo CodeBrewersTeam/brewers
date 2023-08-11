@@ -5,7 +5,17 @@
     <title>Title</title>
 </head>
 <body>
-<p>Username: <span th:text="${currentUser.username}"></span></p>
-<!--<p>Residence: <span th:text="${currentUser.residence.name}"></span></p>-->
+
+<div th:fragment="displayinfo">
+    <span>Hi, </span>
+    <span th:text="${loggedInUser?.username}">Username</span>
+
+    <br>
+
+    <span>Roommate Type: </span>
+    <span th:if="${loggedInUser?.admin}">Admin</span>
+    <span th:if="${!loggedInUser?.admin}">Basic</span>
+</div>
+
 </body>
 </html>
