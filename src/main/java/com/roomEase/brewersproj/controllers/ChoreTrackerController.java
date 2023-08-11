@@ -31,7 +31,6 @@ public class ChoreTrackerController {
     @Autowired
     private ApplicationUserRepository userRepository;
 
-
         @GetMapping("/choresTracker")
         public String getChoresTrackerPage(Model model, Principal principal) {
             LocalDate currentDate = LocalDate.now();
@@ -70,8 +69,6 @@ public class ChoreTrackerController {
             return "choresTracker.html";
         }
 
-
-
     private String saveChoreForDay(ChoreForm choreForm, String day) {
         Chore chore = new Chore();
         chore.setName(choreForm.getName());
@@ -89,7 +86,6 @@ public class ChoreTrackerController {
         choreRepository.save(chore);
         return "redirect:/choresTracker";
     }
-
 
     @PostMapping("/addChore")
         public String addChore(@ModelAttribute Chore chore) {
@@ -110,7 +106,6 @@ public class ChoreTrackerController {
             choreRepository.deleteById(choreId);
             return "redirect:/choresTracker";
         }
-
 
     @PostMapping("/addSundayChore")
     public String saveSundayChores(@ModelAttribute ChoreForm choreForm) {
@@ -147,7 +142,6 @@ public class ChoreTrackerController {
         return saveChoreForDay(choreForm, "Saturday");
     }
 
-
 ///future task to add future chore to current
     @PostMapping("/moveToDayOfWeek/{choreId}")
     public String moveToDayOfWeek(@PathVariable Long choreId, @RequestParam String dayOfWeek) {
@@ -162,9 +156,6 @@ public class ChoreTrackerController {
     }
 
 }
-
-
-
 
 //    @PostMapping("/addSundayChore")
 //    public String saveSundayChores(@ModelAttribute ChoreForm choreForm) {

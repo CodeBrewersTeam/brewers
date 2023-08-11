@@ -27,6 +27,7 @@ public class WebSecurityConfig {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder;
     }
+
     @Bean
     public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
         return new HiddenHttpMethodFilter();
@@ -41,10 +42,15 @@ public class WebSecurityConfig {
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/signup").permitAll()
                         .requestMatchers("/residences").permitAll()
-                        .requestMatchers("/residences/delete/**").permitAll()
-//                        .antMatchers("/residences/delete/**").hasRole("ADMIN")
-                        .requestMatchers("/css/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/residences/delete/**").hasAuthority("ADMIN")
+
+                        .requestMatchers("/adminDashboard").hasAuthority("ADMIN")
+                        .requestMatchers("/myprofile", "/login", "/logout", "/aboutUs").permitAll()
+                        .requestMatchers("/choresTracker", "/users", "/resoluteConflict", "/residences").hasAuthority("APPROVED_USER")
+
+                        .requestMatchers("/css/**").permitAll().anyRequest().authenticated()
+
+
                 )
                 .formLogin()
                 .loginPage("/login").permitAll()
