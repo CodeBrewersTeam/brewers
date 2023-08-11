@@ -22,6 +22,7 @@ public class ApplicationUser implements UserDetails {
     Boolean admin;
     Long telephone;
 
+    private Boolean isApproved = false;
 
     @ManyToOne
     @JoinColumn(name = "residence_id")
@@ -40,6 +41,7 @@ public class ApplicationUser implements UserDetails {
         this.admin = admin;
         this.telephone = telephone;
         this.residence = residence;
+        //If it is not an admin, they're pending approval (pendingApproval is true for not admins)
     }
 
     //Each user can have multiple chores to do, and each chore can be assigned to multiple users.
@@ -127,6 +129,15 @@ public class ApplicationUser implements UserDetails {
     public void setResidence(Residence residence) {
         this.residence = residence;
     }
+
+    public Boolean getIsApproved() {
+        return isApproved;
+    }
+
+    public void setIsApproved(Boolean isApproved) {
+        this.isApproved = isApproved;
+    }
+
     @Override
     public String getUsername() {
         return username;
@@ -163,4 +174,5 @@ public class ApplicationUser implements UserDetails {
     public String getPassword() {
         return password;
     }
+
 }
