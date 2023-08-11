@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
 </head>
 <body>
+<main class="container">
 
+<div th:replace="fragments/header :: nav"></div>
 <h1>Admin Dashboard</h1>
 
 <section>
@@ -56,6 +58,7 @@
         </tbody>
     </table>
 </section>
+</main>
 
 </body>
 </html>
