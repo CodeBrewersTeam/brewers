@@ -56,15 +56,11 @@ public class ApplicationUserController {
         return "resoluteConflict.html";
     }
 
-
-
     @GetMapping("/errorPage")
     public String showErrorPage(Model model) {
         model.addAttribute("errorMessage", "An error occurred");
         return "errorPage.html";
     }
-
-
 
     @PostMapping("/signup")
     public RedirectView postSignup(String firstName, String lastName, String username, String password, String email, String householdId, Boolean admin, Long telephone, Long residenceId) {
@@ -75,17 +71,72 @@ public class ApplicationUserController {
         user.setPassword(passwordEncoder.encode(password));
         user.setEmail(email);
         user.setHouseholdId(householdId);
-        user.setAdmin(admin);
         user.setTelephone(telephone);
 
         Residence selectedResidence = residenceRepository.findById(residenceId).orElse(null);
+        List<ApplicationUser> usersInResidence = applicationUserRepository.findByResidence(selectedResidence);
+
+        if (usersInResidence == null || usersInResidence.isEmpty()) {
+            user.setAdmin(true);  // Set as admin if they're the first in the residence
+            user.setIsApproved(true);  // Auto-approve the first user
+        } else {
+            user.setAdmin(false); // All subsequent users are non-admins until an admin promotes them
+            user.setIsApproved(false); // They are not approved upon registration
+        }
+
         user.setResidence(selectedResidence);
-
         applicationUserRepository.save(user);
-
         authWithHttpServletRequest(username, password);
         return new RedirectView("/login");
     }
+
+    @GetMapping("/adminDashboard")
+    public String getAdminDashboard(Model model, Principal principal) {
+        if (principal != null) {
+            String username = principal.getName();
+            ApplicationUser currentUser = applicationUserRepository.findByUsername(username);
+
+            if(currentUser.getAdmin()) {
+                Residence userResidence = currentUser.getResidence();
+                List<ApplicationUser> nonApprovedUsers = applicationUserRepository.findNonApprovedUsersByResidence(userResidence);
+                List<ApplicationUser> nonAdminUsers = applicationUserRepository.findNonAdminUsersByResidence(userResidence);
+
+                model.addAttribute("nonApprovedUsers", nonApprovedUsers);
+                model.addAttribute("nonAdminUsers", nonAdminUsers);
+
+                return "adminDashboard.html";
+            } else {
+                // Not an admin, redirect to an error page or homepage
+                return "redirect:/";
+            }
+        } else {
+            // Not logged in, redirect to login page
+            return "redirect:/login";
+        }
+    }
+
+    @PostMapping("/users/approve/{id}")
+    public RedirectView approveUser(@PathVariable Long id, Principal principal) {
+        ApplicationUser currentUser = applicationUserRepository.findByUsername(principal.getName());
+        if (currentUser.getAdmin()) { // Ensure that the current user is an admin
+            ApplicationUser userToApprove = applicationUserRepository.findById(id).orElseThrow();
+            userToApprove.setIsApproved(true);
+            applicationUserRepository.save(userToApprove);
+        }
+        return new RedirectView("/adminDashboard");
+    }
+
+    @PostMapping("/users/promote/{id}")
+    public RedirectView promoteUserToAdmin(@PathVariable Long id, Principal principal) {
+        ApplicationUser currentUser = applicationUserRepository.findByUsername(principal.getName());
+        if (currentUser.getAdmin()) { // Ensure that the current user is an admin
+            ApplicationUser userToPromote = applicationUserRepository.findById(id).orElseThrow();
+            userToPromote.setAdmin(true);
+            applicationUserRepository.save(userToPromote);
+        }
+        return new RedirectView("/adminDashboard");
+    }
+
 
     public void authWithHttpServletRequest(String username, String password) {
         try {
@@ -108,22 +159,6 @@ public class ApplicationUserController {
         }
         return "index.html";
     }
-
-//    @GetMapping("/users")
-//    public String getUsersByResidence(Model model, Principal principal) {
-//        if (principal != null) {
-//            String username = principal.getName();
-//            ApplicationUser currentUser = applicationUserRepository.findByUsername(username);
-//
-//            if (currentUser != null) {
-//                Residence userResidence = currentUser.getResidence();
-//                List<ApplicationUser> usersInSameResidence = applicationUserRepository.findByResidence(userResidence);
-//                model.addAttribute("users", usersInSameResidence);
-//            }
-//        }
-//        return "myFlat.html";
-//    }
-
     @GetMapping("/users")
     public String getUsersByResidence(Model model, Principal principal) {
         if (principal != null) {
@@ -164,28 +199,6 @@ public class ApplicationUserController {
         }
         return new RedirectView("/myprofile");
     }
-
-//    @GetMapping("/users/{id}")
-//    public String getUserInfo(Model m, Principal p, @PathVariable Long id) {
-//        if (p != null) {
-//            String username = p.getName();
-//            ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
-//
-//            m.addAttribute("BrowsingUserUsername", username);
-//            m.addAttribute("BrowsingLastName", applicationUser.getLastName());
-//            m.addAttribute("BrowsingFirstName", applicationUser.getFirstName());
-//            m.addAttribute("applicationUserEmail", applicationUser.getEmail());
-//            m.addAttribute("applicationUserTelephone", applicationUser.getTelephone());
-//        }
-//        ApplicationUser applicationUser = applicationUserRepository.findById(id).orElseThrow();
-//        m.addAttribute("applicationUserUsername", applicationUser.getUsername());
-//        m.addAttribute("applicationUserFirstName", applicationUser.getFirstName());
-//        m.addAttribute("applicationUserLastName", applicationUser.getLastName());
-//        m.addAttribute("applicationUserEmail", applicationUser.getEmail());
-//        m.addAttribute("applicationUserTelephone", applicationUser.getTelephone());
-//
-//        return "/user-info.html";
-//    }
 
     @GetMapping("/users/{id}")
     public String getUserInfo(Model model, Principal principal, @PathVariable Long id) {
