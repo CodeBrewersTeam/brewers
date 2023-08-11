@@ -20,7 +20,6 @@ public class ApplicationUser implements UserDetails {
     String username;
     String password;
     String email;
-    String householdId;
     Boolean admin;
     Long telephone;
 
@@ -30,8 +29,7 @@ public class ApplicationUser implements UserDetails {
     @JoinColumn(name = "residence_id")
     private Residence residence;
 
-
-    public ApplicationUser(Long id, String firstName, String lastName, String username, String password, String email, String householdId, Boolean admin, Long telephone, Residence residence) {
+    public ApplicationUser(Long id, String firstName, String lastName, String username, String password, String email, Boolean admin, Long telephone, Residence residence) {
 
         this.id = id;
         this.firstName = firstName;
@@ -39,20 +37,17 @@ public class ApplicationUser implements UserDetails {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.householdId = householdId;
         this.admin = admin;
         this.telephone = telephone;
         this.residence = residence;
-        //If it is not an admin, they're pending approval (pendingApproval is true for not admins)
+
     }
 
-    //Each user can have multiple chores to do, and each chore can be assigned to multiple users.
     @ManyToMany
     @JoinTable(name = "user_chore",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chore_id"))
     private List<Chore> chores;
-
 
 
     public ApplicationUser() {
@@ -93,14 +88,6 @@ public class ApplicationUser implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getHouseholdId() {
-        return householdId;
-    }
-
-    public void setHouseholdId(String householdId) {
-        this.householdId = householdId;
     }
 
     public Boolean getAdmin() {
