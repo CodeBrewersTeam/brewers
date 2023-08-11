@@ -12,6 +12,10 @@
             border-radius: 50%;
             margin-left: 20px;
         }
+
+    .button-style {
+        width: 200px;
+}
     </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"/>
@@ -28,7 +32,7 @@
       <input type="text" id="name" name="name" required>
     </div>
     <div>
-      <button type="submit">Create Residence</button>
+      <button type="submit" class="button-style">Create Residence</button>
     </div>
   </form>
 
@@ -41,7 +45,8 @@
 <!--         role="button" style="background-color: #b22222; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none;">Delete</a>-->
 
       <form id="delete-residence-form-${residence.residenceId}" th:action="${'/residences/delete/' + residence.residenceId}" th:method="delete">
-      <input type ="submit" value ="delete">
+<!--      <input type ="submit" value ="delete" class="button-style">-->
+        <button type="submit" class="button-style">Delete</button>
 
       </form>
 
